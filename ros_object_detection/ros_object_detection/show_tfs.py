@@ -28,11 +28,11 @@ class ShowTfsNode(Node):
             t.header.frame_id = self.parent_tf
             t.child_frame_id = '{}_{}'.format(box.data, i)
 
-            x = ((box.xmin + box.xmax) / 2 - 0.5) * 2
-            y = -((box.ymin + box.ymax) / 2 - 0.5) * 2
+            ### Write your code here ###
+            ### box.xmin, box.xmax, box.ymin, box.ymax
 
-            t.transform.translation.x = x
-            t.transform.translation.y = y
+            t.transform.translation.x = 0.0
+            t.transform.translation.y = 0.0
             t.transform.translation.z = 0.0
             t.transform.rotation.x = 0.0
             t.transform.rotation.y = 0.0
