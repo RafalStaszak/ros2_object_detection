@@ -9,6 +9,7 @@ from std_msgs.msg import Header
 from .point_cloud2 import read_points, create_cloud
 import threading
 
+
 class ShowOnPclNode(Node):
     def __init__(self):
         super().__init__('show_on_pcl')
@@ -19,7 +20,8 @@ class ShowOnPclNode(Node):
 
         self.pcl_subscriber = self.create_subscription(PointCloud2, "/point_cloud", self.pcl_callback,
                                                        qos_profile=qos_profile_sensor_data)
-        self.bb_subscriber = self.create_subscription(BoundingBoxes, "/bounding_box", self.box_callback)
+        self.bb_subscriber = self.create_subscription(BoundingBoxes, "/bounding_box", self.box_callback,
+                                                      qos_profile=qos_profile_sensor_data)
         self.pcl_publisher = self.create_publisher(PointCloud2, '/point_cloud_detection', 5)
 
     def pcl_callback(self, data):
@@ -52,7 +54,7 @@ class ShowOnPclNode(Node):
             header = Header()
             header.frame_id = "map"
             pc2 = create_cloud(header, fields, points)
-            self.pcl_pub.publish(pc2)
+            self.pcl_publisher.publish(pc2)
 
 
 def main(args=None):
