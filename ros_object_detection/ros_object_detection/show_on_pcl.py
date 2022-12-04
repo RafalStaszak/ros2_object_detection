@@ -43,6 +43,10 @@ class ShowOnPclNode(Node):
 
             for point in data:
                 x, y, z, rgba = point
+                for box in self.boxes.data:
+                    if box.xmin <= x / 2 + 0.5 <= box.xmax and box.ymin <= -y / 2 + 0.5 <= box.ymax:
+                        z = 0.5
+                        break
                 points.append([x, y, z, rgba])
 
             fields = [PointField(name='x', offset=0, datatype=PointField.FLOAT32, count=1),
