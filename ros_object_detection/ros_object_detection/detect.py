@@ -44,11 +44,8 @@ class ObjectDetectionNode(Node):
         model_p = self.get_parameter('model').value
         label_map_p = self.get_parameter('label_map').value
 
-        self.get_logger().info('load model')
         self.model = self.load_model(model_p)
-        self.get_logger().info('load category')
         self.category_index = label_map_util.create_category_index_from_labelmap(label_map_p, use_display_name=True)
-        self.get_logger().info('load min score')
         self.min_score = self.get_parameter('score_thresh').value
 
         self.image_pub = self.create_publisher(Image, '/image_annotated', 1)
@@ -62,7 +59,6 @@ class ObjectDetectionNode(Node):
                                             qos_profile=qos_profile_sensor_data)
         self.subscribe_lock = False
         self.image_msg = None
-        self.get_logger().info('init done')
 
     def load_model(self, model_dir):
         model_dir = os.path.join(model_dir, 'saved_model')
@@ -137,9 +133,7 @@ class ObjectDetectionNode(Node):
         return output_image, boxes, classes, scores
 
     def get_image(self, data):
-        self.get_logger().info('got shit')
         if self.subscribe_lock is False:
-            self.get_logger().info('got shit locked')
             self.subscribe_lock = True
             self.image_msg = data
             self.subscribe_lock = False
